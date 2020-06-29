@@ -103,8 +103,9 @@ $("#start").click(function firstQuestions() {
       button7.id = "button7";
       button7.textContent = "1";
       body.appendChild(button7);
-      $("#button").click(function () {
+      $("#button7").click(function () {
         secondsLeft = secondsLeft - 3;
+        console.log(highScore);
       });
       let button8 = document.createElement("button");
       button8.id = "button8";
@@ -112,6 +113,7 @@ $("#start").click(function firstQuestions() {
       body.appendChild(button8);
       $("#button8").click(function () {
         secondsLeft = secondsLeft - 3;
+        console.log(highScore);
       });
       let button9 = document.createElement("button");
       button9.id = "button9";
