@@ -19,16 +19,21 @@ THEN I can save my initials and score*/
 
 let body = document.body;
 let secondsLeft = 10;
+let score = 0;
 let timeEl = document.getElementById("time");
 let mainEl = document.getElementById("main");
 let h1El = document.getElementById("h1");
+let nameEl = document.getElementById("name");
+let yourScoreEl = document.getElementById("yourScore");
+highScore = 0;
+//let initialsBox = document.createElement(input);
 
 let liEl1 = document.createElement("li1");
 
-let highScore = secondsLeft;
-
-$("#start").click(function setTime() {
-  let timerInterval = setInterval(function () {
+//let highScore = score + secondsLeft;
+let timerInterval = 0;
+function setTime() {
+  timerInterval = setInterval(function () {
     timeEl.textContent = "time left " + secondsLeft + " sec";
 
     secondsLeft--;
@@ -36,11 +41,14 @@ $("#start").click(function setTime() {
     if (secondsLeft === 0) {
       clearInterval(timerInterval);
       sendMessage();
+
+      logScore();
     }
   }, 1000);
-});
+}
 
 $("#start").click(function firstQuestions() {
+  setTime();
   let listEl = document.createElement("h1");
   listEl.textContent =
     "What are the 3 main orders of insects of interest to trout anglers?";
@@ -64,9 +72,10 @@ $("#start").click(function firstQuestions() {
   button3.textContent = "Mayflies, Caddisflies, Stoneflies";
   body.appendChild(button3);
   $("#button3").click(function () {
-    secondsLeft = secondsLeft + 3;
-    highScore = highScore + 3;
+    score = score + 3;
+    //localStorage.setItem("highScore.value");
   });
+
   $("#button1, #button2, #button3").click(function secondQuestions() {
     let listEl = document.createElement("h1");
     listEl.textContent =
@@ -84,8 +93,7 @@ $("#start").click(function firstQuestions() {
     button5.textContent = "Brook Trout";
     body.appendChild(button5);
     $("#button5").click(function () {
-      secondsLeft = secondsLeft + 3;
-      highScore = highScore + 3;
+      score = score + 3;
     });
     let button6 = document.createElement("button");
     button6.id = "button6";
@@ -106,6 +114,7 @@ $("#start").click(function firstQuestions() {
       $("#button7").click(function () {
         secondsLeft = secondsLeft - 3;
         console.log(highScore);
+        stopTimer();
       });
       let button8 = document.createElement("button");
       button8.id = "button8";
@@ -114,22 +123,31 @@ $("#start").click(function firstQuestions() {
       $("#button8").click(function () {
         secondsLeft = secondsLeft - 3;
         console.log(highScore);
+        stopTimer();
       });
       let button9 = document.createElement("button");
       button9.id = "button9";
       button9.textContent = "2";
       body.appendChild(button9);
       $("#button9").click(function () {
-        secondsLeft = secondsLeft + 3;
-        highScore = highScore + 3;
+        highScore = score + 3;
         console.log(highScore);
+        //alert("Your score is " + highScore);
+        stopTimer();
       });
     });
   });
 });
-
+function stopTimer() {
+  clearInterval(timerInterval);
+}
 function sendMessage() {
   mainEl.textContent = "game over";
+}
+function logScore() {
+  let nameEl = document.createElement("input");
+
+  let yourScoreEl = document.createElement("input");
 }
 
 //sendMessage();
