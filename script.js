@@ -23,10 +23,11 @@ let score = 0;
 let timeEl = document.getElementById("time");
 let mainEl = document.getElementById("main");
 let h1El = document.getElementById("h1");
+let h2El = document.getElementById("h2");
 let nameEl = document.getElementById("name");
 let yourScoreEl = document.getElementById("yourScore");
 highScore = 0;
-//let initialsBox = document.createElement(input);
+let initialsBox = document.createElement("input");
 
 let liEl1 = document.createElement("li1");
 
@@ -46,6 +47,33 @@ function setTime() {
     }
   }, 1000);
 }
+//h2El.textContent = "Your Score is " + score;
+const inputInitials = document.getElementById("initials");
+const inputScore = document.getElementById("score");
+const saveBtn = document.getElementById("saveBtn");
+const lsOutput = document.getElementById("lsOutput");
+
+saveBtn.onclick = function () {
+  const initials = inputInitials.value;
+  const score = inputScore.value;
+  console.log(initials);
+  console.log(score);
+
+  if (initials && score) {
+    localStorage.setItem(initials, score);
+    //location.reload();
+  }
+};
+for (let i = 0; i < localStorage.length; i++) {
+  const initials = localStorage.initials;
+  const score = localStorage.getItem(initials);
+  document.getElementById("lsOutput").innerHTML = localStorage.getItem(
+    initials,
+    score
+  );
+}
+
+//}
 
 $("#start").click(function firstQuestions() {
   setTime();
@@ -73,7 +101,6 @@ $("#start").click(function firstQuestions() {
   body.appendChild(button3);
   $("#button3").click(function () {
     score = score + 3;
-    //localStorage.setItem("highScore.value");
   });
 
   $("#button1, #button2, #button3").click(function secondQuestions() {
@@ -115,6 +142,8 @@ $("#start").click(function firstQuestions() {
         secondsLeft = secondsLeft - 3;
         console.log(highScore);
         stopTimer();
+        topScore();
+        logScore();
       });
       let button8 = document.createElement("button");
       button8.id = "button8";
@@ -124,6 +153,8 @@ $("#start").click(function firstQuestions() {
         secondsLeft = secondsLeft - 3;
         console.log(highScore);
         stopTimer();
+        topScore();
+        logScore();
       });
       let button9 = document.createElement("button");
       button9.id = "button9";
@@ -134,6 +165,8 @@ $("#start").click(function firstQuestions() {
         console.log(highScore);
         //alert("Your score is " + highScore);
         stopTimer();
+        topScore();
+        logScore();
       });
     });
   });
@@ -144,10 +177,17 @@ function stopTimer() {
 function sendMessage() {
   mainEl.textContent = "game over";
 }
+function topScore() {
+  let yourScore = highScore + secondsLeft;
+  console.log(yourScore);
+  alert("Your Score is " + yourScore);
+}
 function logScore() {
-  let nameEl = document.createElement("input");
-
-  let yourScoreEl = document.createElement("input");
+  let initials = prompt("enter your initials");
+  //let yourScore = prompt("enter your score");
+  let scoreMessage = document.createElement("h2");
+  //h2El.id = "initials";
+  //h2El.textcontent = yourScore;
 }
 
 //sendMessage();
