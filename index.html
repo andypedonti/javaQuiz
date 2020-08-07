@@ -12,17 +12,22 @@
 
     <h1 class="time" id="time"></h1>
     <h2 id="main"></h2>
-    <h2 class="title" id="title">Enter your Score and initials</h2>
-    <fieldset>
-      <legend>Insert Score and Initials</legend>
-      <input id="initials" type="text" placeholder="Enter your initials" />
-      <input id="score" type="text" placeholder="Enter your score" />
-      <button type="button" id="saveBtn">Save</button>
-    </fieldset>
-    <fieldset>
-      <legend>High Scores</legend>
-      <div id="lsOutput"></div>
-    </fieldset>
+    <div>
+      <fieldset>
+        <h2 id="score"></h2>
+        <div id="letters"></div>
+        <div id="numbers"></div>
+        <div id="writeScore"></div>
+        <button id="log"></button>
+      </fieldset>
+    </div>
+    <div>
+      <fieldset>
+        <h2 id="highscore">Highscore</h2>
+        <p id="postScore"></p>
+        <p id="previousScore"></p>
+      </fieldset>
+    </div>
 
     <script
       src="https://code.jquery.com/jquery-3.5.1.min.js"

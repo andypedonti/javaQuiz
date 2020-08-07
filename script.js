@@ -14,11 +14,11 @@ THEN I can save my initials and score*/
 //higher order functions
 //function call vs function declaration
 
-//need to make buttons clickable
 //local storage
 
 let body = document.body;
 let secondsLeft = 10;
+let time = secondsLeft;
 let score = 0;
 let timeEl = document.getElementById("time");
 let mainEl = document.getElementById("main");
@@ -26,12 +26,11 @@ let h1El = document.getElementById("h1");
 let h2El = document.getElementById("h2");
 let nameEl = document.getElementById("name");
 let yourScoreEl = document.getElementById("yourScore");
-highScore = 0;
+
 let initialsBox = document.createElement("input");
 
 let liEl1 = document.createElement("li1");
 
-//let highScore = score + secondsLeft;
 let timerInterval = 0;
 function setTime() {
   timerInterval = setInterval(function () {
@@ -43,7 +42,7 @@ function setTime() {
       clearInterval(timerInterval);
       sendMessage();
 
-      logScore();
+      //logScore();
     }
   }, 1000);
 }
@@ -52,29 +51,7 @@ const inputInitials = document.getElementById("initials");
 const inputScore = document.getElementById("score");
 const saveBtn = document.getElementById("saveBtn");
 const lsOutput = document.getElementById("lsOutput");
-
-saveBtn.onclick = function () {
-  const initials = inputInitials.value;
-  const score = inputScore.value;
-  console.log(initials);
-  console.log(score);
-
-  if (initials && score) {
-    localStorage.setItem(initials, score);
-    //location.reload();
-  }
-};
-for (let i = 0; i < localStorage.length; i++) {
-  const initials = localStorage.initials;
-  const score = localStorage.getItem(initials);
-  document.getElementById("lsOutput").innerHTML = localStorage.getItem(
-    initials,
-    score
-  );
-}
-
-//}
-
+init();
 $("#start").click(function firstQuestions() {
   setTime();
   let listEl = document.createElement("h1");
@@ -142,8 +119,6 @@ $("#start").click(function firstQuestions() {
         secondsLeft = secondsLeft - 3;
         console.log(highScore);
         stopTimer();
-        topScore();
-        logScore();
       });
       let button8 = document.createElement("button");
       button8.id = "button8";
@@ -153,43 +128,112 @@ $("#start").click(function firstQuestions() {
         secondsLeft = secondsLeft - 3;
         console.log(highScore);
         stopTimer();
-        topScore();
-        logScore();
       });
       let button9 = document.createElement("button");
       button9.id = "button9";
       button9.textContent = "2";
       body.appendChild(button9);
       $("#button9").click(function () {
-        highScore = score + 3;
-        console.log(highScore);
-        //alert("Your score is " + highScore);
+        score = score + 3;
+
         stopTimer();
-        topScore();
+
         logScore();
+        postScore();
       });
     });
   });
 });
+
+let scorE = score + secondsLeft;
+
+function postScore() {
+  let scorE = secondsLeft + score;
+  console.log(scorE);
+  console.log(secondsLeft);
+}
+
 function stopTimer() {
   clearInterval(timerInterval);
 }
 function sendMessage() {
   mainEl.textContent = "game over";
 }
-function topScore() {
-  let yourScore = highScore + secondsLeft;
-  console.log(yourScore);
-  alert("Your Score is " + yourScore);
+function init() {
+  let storage = JSON.parse(getStor()) || [];
+  for (let i = 0; i < storage.length; i++) {
+    let postScore = document.getElementById("postScore");
+    let div = document.createTextNode(
+      storage[i].initials + " " + storage[i].numbers
+    );
+    postScore.appendChild(div);
+  }
 }
+
 function logScore() {
-  let initials = prompt("enter your initials");
-  //let yourScore = prompt("enter your score");
-  let scoreMessage = document.createElement("h2");
-  //h2El.id = "initials";
-  //h2El.textcontent = yourScore;
+  let para = document.createElement("p");
+  let node = document.createTextNode("Enter Your intitials and  save score");
+  para.appendChild(node);
+  let element = document.getElementById("score");
+  element.appendChild(node);
+
+  let initials = document.createElement("p");
+  let letters = document.createTextNode("Your score is: ");
+  initials.appendChild(letters);
+  let spot = document.getElementById("letters");
+  spot.appendChild(letters);
+
+  let nums = document.createElement("h2");
+  let numbers = document.createTextNode(score + secondsLeft);
+  nums.appendChild(numbers);
+  let z = document.getElementById("numbers");
+  z.appendChild(numbers);
+
+  let saveBtn = document.createElement("BUTTON");
+  let butt = document.createTextNode("save");
+  saveBtn.appendChild(butt);
+  let save = document.getElementById("log");
+  save.appendChild(butt);
+
+  let x = document.createElement("INPUT");
+  x.setAttribute("type", "text");
+  x.class = "textArea";
+  x.setAttribute("value", "");
+  let init = document.getElementById("writeScore");
+  init.appendChild(x);
 }
 
-//sendMessage();
+// $("#writeScore").each(function () {
+//   let key = $(this).attr("id");
 
-//setTime();
+//   //let inputValue = localStorage.getItem(key);
+//   $(this).val(key);
+// });
+$("#log").on(
+  "click",
+  function () {
+    let storage = JSON.parse(getStor()) || [];
+    let initials = $("#writeScore > input").val();
+    let numbers = $("#numbers").text();
+    let objectStorage = {
+      initials,
+      numbers,
+    };
+
+    storage.push(objectStorage);
+    localStorage.setItem("codequiz", JSON.stringify(storage));
+    let postScore = document.getElementById("postScore");
+    let div = document.createTextNode(initials + " " + numbers);
+    postScore.appendChild(div);
+  }
+
+  //   let inputValue = $(this).parent().parent().find("input").val();
+  //   let key = $(this).parent().parent().find("input").attr("id");
+
+  //   localStorage.setItem(key, inputValue);
+  //   document.getElementById("postScore").innerHTML = localStorage.getItem(
+  //     "inputValue"
+);
+function getStor() {
+  return localStorage.getItem("codequiz");
+}
